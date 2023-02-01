@@ -1,0 +1,284 @@
+//Au démarrage de la page
+//déclaration et initialisation de variables globales
+xmlpizzas="";
+numPIzza=0;
+numTarif=0;
+indexGenre=0;
+xmlingred="";
+xmltailles="";
+
+// déclaration/initialisation des tableaux
+
+numeros=new Array();
+noms= new Array();
+tailles= new Array();
+lesprix= new Array();
+lignes=new Array();
+
+xmlpizzas=initialisation(xmlpizzas);
+affichage(xmlpizzas);
+
+
+//   procédures évènementielles -----------------
+// changement de sélection dans la liste des pizzas
+
+$("#listepizzas").change
+(
+       function()
+       {
+        
+        affichage(xmlpizzas);
+       }
+);
+
+// click sur les boutons radio ( genres)
+$("#0,#1,#2,#3").click
+(
+        function()
+        {
+            clef="0";
+            valeur="0";
+            // on récupère l'id du genre
+            var indexGenre= $(this).attr('id');
+            
+            // on dérermine la clé et la valeur de filtrage sur le genre
+            if(indexGenre!="0")
+            {
+                clef="numGenre";
+                valeur=indexGenre;
+            }
+             // on réinitialise la chaine xml pour les pizzas
+            xmlpizzas=getXmlBase("v_pizzas",clef,valeur);
+
+            // on vide la liste des pizzas
+            $("#listepizzas").html("");
+
+            afficheListe("listepizzas",xmlpizzas,"v_pizzas","numPizza","nomPizza");
+            $("#listetailles").html("");
+            initialisation(xmlpizzas);
+            affichage(xmlpizzas);
+        }
+);
+
+// évènement changement dans la liste listetailles
+
+$("#listetailles").change
+(
+        function()
+        {
+             numTaille=$("#listetailles").val();
+             numTarif=getElement(xmlpizzas,"v_pizzas","numPizza",numPizza,"numTarif");
+
+    // on récupère le prix avec la fonction calcul
+     prix = calcul(numTarif);
+
+     // on affiche le prix dans la zone correspondante
+     $("#prix").html(prix);
+
+   }
+);
+
+// click sur le bouton ajout
+$("#ajout").click
+(
+        function()
+        {
+            var num=$("#listepizzas").val();
+           //var nom =getElement(xmlpizzas,"v_pizzas","numPizza",num,"nomPizza");
+           var taille =$("#listetailles").val();
+           var prix=$("#prix").html();
+           prix=parseFloat(prix);
+           var nomtaille=getElement(xmltailles,"tailles","numTaille",taille,"nomTaille");
+           var nom=getElement(xmlpizzas,"v_pizzas","numPizza",num,"nomPizza");
+            //  on affecte les valleurs respectivement à chacun des tableaux déclarés
+           numeros.push(num);
+           tailles.push(taille);
+           lesprix.push(prix);
+           
+           // on construit la chaine d'affichage
+           chaine="<div>";
+           chaine+=nom+" "+nomtaille+" "+prix+"€";
+           chaine+="</div>";
+           nbElements=numeros.length;
+           index=nbElements-1;
+           
+           // on construit la chaine de caractères qui affiche un bouton pour modifier la taille
+           bouton="<button id='m"+index+"' class=' modif text-right btn btn-sm btn-success'>Modifier</button>";
+           chaine+=bouton;
+       
+             // on construit la chaine de caractèes qui affihe un bouton pour  supprimer un élément
+           bouton="<button id='s"+index+"' class=' suppr text-right btn btn-sm btn-danger'>Supprimer</button>";
+           chaine+=" "+bouton;
+           chaine+="<br /><br />";
+            lignes.push(chaine);
+            affichePanier(xmlpizzas,xmltailles,numeros,tailles,lesprix,lignes);
+        }
+);
+
+// evènement clik sur les boutons "modifier" en récupérant la classe associéé 
+
+$(".modif").live("click",
+
+        function()
+        {
+           id=$(this).attr('id');
+           
+           //on récupère l'index du tableau des pizzas
+           lg=id.length;
+           index=id.substr(1,lg-1);
+           taille=$("#listetailles").val();
+           num=numeros[index];
+           var nomtaille=getElement(xmltailles,"tailles","numTaille",taille,"nomTaille");
+           var nom=getElement(xmlpizzas,"v_pizzas","numPizza",num,"nomPizza");
+                      //  on affecte les valeurs respectivement à chacun des tableaux déclarés
+             // on construit la chaine d'affichage
+             chaine="<div>";
+           chaine+=nom+" "+nomtaille+" "+prix+"€";
+           chaine+="</div>";
+          
+               // on construit la chaine de caractèes qui affihe un bouton pour modifier la taille
+           bouton="<button id='m"+index+"' class=' modif text-right btn btn-sm btn-success'>Modifier</button>";
+           chaine+=bouton;
+
+             // on construit la chaine de caractèes qui affihe un bouton pour  supprimer un élément
+           bouton="<button id='s"+index+"' class=' suppr text-right btn btn-sm btn-danger'>Supprimer</button>";
+           
+           chaine+=" "+bouton;
+           chaine+="<br /><br />";
+            lignes[index]=chaine;
+            li=lignes[index];
+           
+           // affichage dans la division "divpanier"
+         affichePanier(xmlpizzas,xmltailles,numeros,tailles,lesprix,lignes);
+
+        }
+);
+//----------------------------------------------------
+// fonctions/procédures
+
+function initialisation(xmlpizzas)
+{
+    xmlpizzas=getXmlBase("v_pizzas","0","0");
+    //remplissage de la liste
+    afficheListe("listepizzas",xmlpizzas,"v_pizzas","numPizza","nomPizza");
+    xmltailles=getXmlBase("tailles","0","0");
+    // création de la liste des tailles
+     afficheListe("listetailles",xmltailles,"tailles","numTaille","nomTaille");
+    // on récupère le n° de la pizza( clé primaire)
+    numPizza= $("#listepizzas").val();
+    return xmlpizzas;
+}  
+    
+  function affichage(xmlpizzas)
+  {  
+    numPizza= $("#listepizzas").val();
+    indexImage= getElement(xmlpizzas,"v_pizzas","numPizza",numPizza,"indexImage");
+
+    
+    // détermination du chemin d'accès à l'image
+    urlimage="images/"+indexImage+".jpg";
+    
+    // afffichage de l'image correspondant à la pizza sélectionnée
+    $("#imgpizza").attr('src',urlimage);
+    
+    // affichage des infos de la pizza sélectionnée
+    chaineinfos=afficheInfos(xmlpizzas,numPizza);
+    $("#divinfos").html(chaineinfos);
+    
+    //récupération de la chaine xml pour une table ou une vue spécifiée
+    // on filtre les ingredients sur le nuùéro de la pizza sélectionnée
+    
+    chaine=afficheIngredients(xmlingred);
+    $("#divingred").html(chaine);
+    
+    // on récupère le tarif de la pizza sélectionnée
+    numTarif=getElement(xmlpizzas,"v_pizzas","numPizza",numPizza,"numTarif");
+
+    // on récupère le prix avec la fonction calcul
+     prix = calcul(numTarif);
+
+     // on affiche le prix dans la zone correspondante
+     $("#prix").html(prix);
+     
+   
+  }
+
+function afficheInfos(xmlpizzas,numPizza)
+{
+     // on récupère la valeur de la valeur "vegetarienne"
+     var veget=getElement(xmlpizzas,"v_pizzas","numPizza",numPizza,"vegetarienne");
+     var nouvelle =getElement(xmlpizzas,"v_pizzas","numPizza",numPizza,"new");
+     
+     // test et modification du contenu des variables
+     if(veget=="0")
+         {
+            veget="Non";
+         }
+         else
+         {
+             veget="Oui"
+         }
+
+         if(nouvelle=="0")
+         {
+            nouvelle="Non";
+         }
+         else
+         {
+             nouvelle="Oui"
+         }
+         
+         // construction de la chaine de caractères
+         var chaine = "";
+         chaine+="Végétarienne : "+veget;
+         chaine+="<br />";
+
+         chaine+="Nouveau : "+nouvelle;
+         chaine+="<br />";
+ 
+         return chaine;     
+}
+
+// fonction qui retourne une chaine après qu'on ait parsé  la chaine xml
+function afficheIngredients()
+{
+    // parcours des éléments de la chaine xml
+    chaine="";
+    xmlingred=getXmlBase("v_ingredpizza","numPizza",numPizza);
+ 
+    $(xmlingred).find("v_ingredpizza").each
+    (
+        function()
+        {
+            nom = $(this).find("nomIngredient").text();
+             chaine+=nom;
+            chaine+="<br />";
+
+        }
+    );
+   return chaine;
+}
+function calcul(numTarif)
+{
+     // on récup le n° de la taille dans la liste des tailles
+     numTaille=$("#listetailles").val();
+     // on récup les couts des pizzas en filtrant sur le code tarif
+     xmlcout=getXmlBase("couter","numTarif",numTarif);
+     prix= getElement(xmlcout,"couter","numTaille",numTaille,"prix");
+     return prix;
+     
+     
+}
+
+function affichePanier(xmlpizzas,xmltailles,numeros,tailles,lesprix,lignes)
+{
+    $("#divpanier").html("");
+    for(var i=0;i<numeros.length;i++)
+    {
+          chaine=lignes[i];    
+        $("#divpanier").append(chaine);
+
+    }
+    
+    
+}

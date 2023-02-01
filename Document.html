@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)http://localhost/pizzas2022/ -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Liaison au fichier css de Bootstrap -->
+	<link rel="stylesheet" href="./Document_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./Document_files/pizzas.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com/">
+    <script src="./Document_files/jquery-3.5.1.slim.min.js.télécharger" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous">
+     </script>
+</head>
+<body>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<header>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<nav id="bandeau" class="navbar navbar-expand-lg navbar-dark  fixed-top">
+				<a class="navbar-brand" href="http://localhost/pizzas2022/#">
+					<img src="./Document_files/vignette.png" width="70" height="60" alt="">
+				</a>
+				
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuprincipal" aria-controls="menuprincipal" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="menuprincipal">
+					<ul class="navbar-nav mr-auto">
+						<!-- 2 liens vides pour laisser de l'espace -->
+						<li class="nav-item">
+							<a class="nav-link" href="http://localhost/pizzas2022/#"></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="http://localhost/pizzas2022/#"></a>
+						</li>
+						<li class="nav-item">
+							<label id="titre">PIZZAS XL</label>
+						</li>
+						
+					</ul>
+					
+				</div>
+			</nav>
+		</div>
+	</div>
+
+</div>
+</header><div class="container-fluid">
+
+	<div id="principale" class="row mt-5">
+		<div id="div1" class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mx-auto mt-3 bg-light text-secondary text-center">
+		      <label>Genres</label>
+			  <br>
+			  <label>Toutes</label> &nbsp;<input type="radio" id="0" name="genre" checked="">
+			  <label>Nos Classics</label> &nbsp;<input type="radio" id="1" name="genre">
+			  <label>Italiennes</label> &nbsp;<input type="radio" id="2" name="genre">
+			  <label>Spéciales</label> &nbsp;<input type="radio" id="3" name="genre">
+			  <br>
+			  <select id="listepizzas"> 
+			  <option value="37">4 FROMAGES</option><option value="32">4 SAISONS</option><option value="33">AMÉRICAINE</option><option value="18">ASIATIQUE</option><option value="17">AUSTRALIENNE</option><option value="34">BOLOGNAISE</option><option value="2">BOSTON</option><option value="26">BUFFALO</option><option value="15">CALIENTE</option><option value="4">CALZONE (soufflée ou non)</option><option value="31">CALZONE DU CHEF</option><option value="54">CALZONNETA(Soufflée)</option><option value="45">CAMPIONE</option><option value="30">CANADIENNE</option><option value="42">CHICAGO</option><option value="46">COMPOSTELLE</option><option value="16">DALLAS</option><option value="14">DIJONNAISE</option><option value="19">EUROPÉENNE</option><option value="7">FERMIÈRE</option><option value="25">FORESTIÈRE</option><option value="36">FRANÇAISE</option><option value="52">GORGONZOLA</option><option value="43">GOURMANDE</option><option value="1">GOURMET(Margarita)</option><option value="20">HAWAÏENNE</option><option value="8">IBIZA</option><option value="41">INDIENNE</option><option value="11">ITALIENNE</option><option value="53">JACQUES</option><option value="10">KEBAB</option><option value="21">LÉSIGNY</option><option value="27">MÉDITERRANÉE</option><option value="40">MEXICAINE</option><option value="6">MIAMI</option><option value="35">MONTANA</option><option value="12">NAPOLITAINE</option><option value="3">NEW YORK STYLE</option><option value="28">NORVÉGIENNE</option><option value="23">OCÉANE</option><option value="24">ORIENTALE</option><option value="48">OZOIRIENNE</option><option value="22">PAYSANNE</option><option value="39">RACLETTE</option><option value="51">RICOTTA</option><option value="47">SANTENOISE</option><option value="49">SPIANATA</option><option value="29">SUÉDOISE</option><option value="44">TARTIFLETTE</option><option value="5">TEXAS</option><option value="50">TUTTA VÉGÉTALE</option><option value="9">VEGAS</option><option value="38">VÉGÉTARIENNE</option><option value="13">WASHINGTON</option></select>
+			  <br><br>
+			  <!-- affichage de l'image
+			  de la pizza sélectionnée -->
+			  <div id="divimg">
+			      <img src="./Document_files/0.jpg" id="imgpizza" width="300px" height="300px">
+			  </div>
+			  
+			  <!-- affichage des infos
+			  de la pizza sélectionnée -->
+			  <div id="divinfos">Végétarienne : Oui<br>Nouveau : Non<br></div>
+    
+			    <!-- affichage des ingrédients
+			  pour la pizza sélectionnée -->
+			  <br>
+			  
+			  <div id="divingred" class="text-left bg-light text-secondary text-center border border-success">tomate<br>emmental<br>chèvre<br>double fromage<br>bleu<br></div>
+			  
+	</div>
+	<div id="div2" class="col-xs-12 col-sm-12 col-md-2 col-lg-2 mx-auto mt-3 bg-light text-secondary text-center">
+	Calcul
+	<br>
+		<div id="divcalcul">
+			<select id="listetailles">
+
+			<option value="1">SMALL</option><option value="2">MEDIUM</option><option value="3">LARGE</option><option value="4">XL</option></select> 
+			<br><br>
+			Prix : <span id="prix" class="h4 text-success">10.40</span>
+		</div>
+		<br>
+		<button id="ajout" class="btn btn-success btn-sm">Ajouter au panier</button>
+		<!--Panier-->
+		<br><br>
+		<div class="row">
+			
+		</div>
+		<div class="text-left" id="divpanier">
+			
+			
+		</div>
+	</div>
+
+	
+			
+     </div>
+		
+</div>		
+			 
+	 
+
+<footer class="mt-4">
+      <div class="text-center">
+	     Pizzas XL
+		 <br>
+	     Copyright : GMTE94
+	  </div>
+</footer>
+
+<!-- Les liaisons aux scripts -->
+<script type="text/javascript" src="./Document_files/jquery.min.js.télécharger"></script>
+<script src="./Document_files/bootstrap.min.js.télécharger" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="./Document_files/jquery-ui.js.télécharger"></script>
+<script src="./Document_files/fonctionsajax.js.télécharger"></script>
+<script src="./Document_files/index.js.télécharger">
+</script><script src="./Document_files/fonctionsajax.js.télécharger"></script>
+</body></html>

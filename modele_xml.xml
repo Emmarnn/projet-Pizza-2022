@@ -1,0 +1,15 @@
+<gestcli>
+    <client>
+        <num>1</num>
+        <nom>mysql</nom>
+        <prenom>A</prenom>
+        <email>sql@gmail.com</email>
+    </client>
+    <client>
+        <num>2</num>
+        <nom>phpée</nom>
+        <prenom>B</prenom>
+        <email>bph@gmail.com</email>
+    </client>
+    .............
+</gestcli>
